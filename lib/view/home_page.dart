@@ -21,6 +21,7 @@ class _HomePageState extends State<HomePage> {
   var option = '';
   var highlightPoint = '';
   final repo = Repository();
+  final controller = PageController();
 
   List<CarModel>? data;
   void fetch() async {
@@ -31,7 +32,7 @@ class _HomePageState extends State<HomePage> {
         extraScript = repo.extraScript(data!);
         option = repo.optionData;
 
-        // FlutterClipboard.copy(option);
+        FlutterClipboard.copy(extraScript);
       });
     }
   }
@@ -81,14 +82,29 @@ class _HomePageState extends State<HomePage> {
                 width: double.maxFinite,
                 height: 450,
               ),
-              ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      final optionTemp = extraScript;
-                      extraScript = optionTemp + repo.highlightPoint(0);
-                    });
-                  },
-                  child: Text("data"))
+              Expanded(
+                child: PageView(
+                  controller: controller,
+                  children: [
+                    ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            final optionTemp = extraScript;
+                            extraScript = optionTemp + repo.highlightPoint(0);
+                          });
+                        },
+                        child: Text("data")),
+                    ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            final optionTemp = extraScript;
+                            extraScript = optionTemp + repo.highlightPoint(5);
+                          });
+                        },
+                        child: Text("data2")),
+                  ],
+                ),
+              )
             ],
           ),
         ),

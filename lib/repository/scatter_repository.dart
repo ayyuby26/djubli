@@ -6,7 +6,7 @@ class Repository {
     var dataBJ = [];
     for (var e in data) {
       dataBJ.add([
-        int.parse(e.purchase[0].purchaseDate.substring(0, 4)),
+        int.parse(e.purchase[0].purchaseDate.split("-")[1]),
         e.price.substring(0, e.price.length - 6),
         e.usedFrom,
         e.brandName,
@@ -21,17 +21,17 @@ class Repository {
 
   highlightPoint(int index) {
     return """
-    var delayInMilliseconds = 1000; //1 second
+    var delayInMilliseconds = 2000; //1 second
     setTimeout(function() { 
           chart.dispatchAction({
             type: 'highlight',
-            seriesIndex: $index,
+            seriesIndex: 0,
             dataIndex: $index
           });
         
           chart.dispatchAction({
             type: 'showTip',
-            seriesIndex: $index,
+            seriesIndex: 0,
             dataIndex: $index
           });
     }, delayInMilliseconds); 
@@ -82,6 +82,13 @@ class Repository {
 {
     color: ['#dd4444', '#fec42c', '#80F1BE'
     ],
+    legend: {
+      top: 10,
+      data: ['Mobil'],
+      textStyle: {
+        fontSize: 16
+      }
+    },
     grid: {
         left: '11%',
         right: '18%',
@@ -94,7 +101,7 @@ class Repository {
             var value = param.value;
             // prettier-ignore
             return '<div style="border-bottom: 1px solid rgba(255,255,255,.3); font-size: 18px;padding-bottom: 7px;margin-bottom: 7px">'
-            + param.seriesName+', Laku Tahun' + value[0]
+            + param.seriesName+', Laku Tahun: ' + value[0]
             + '</div>'
             + schema[1].text + '：' + value[1] + '<br>'
             + schema[2].text + '：' + value[2] + '<br>'
@@ -105,14 +112,15 @@ class Repository {
         }
     },
     xAxis: {
-        type: 'category',
+        type: 'value',
         name: 'Waktu',
         nameGap: 16,
         nameTextStyle: {
-            fontSize: 16
+          fontSize: 16
         },
+        max: 12,
         splitLine: {
-            show: false
+          show: false
         }
     },
     yAxis: {
@@ -129,7 +137,7 @@ class Repository {
     },
     series: [
         {
-            name: 'Ringkasan Data',
+            name: 'Mobil',
             data: dataBJ,
             type: 'scatter',
             itemStyle: itemStyle,
@@ -140,28 +148,5 @@ class Repository {
     ]
 }
         ''';
-  }
-
-  String get trigger {
-    return """
-  chart.dispatchAction({
-    type: 'downplay',
-    seriesIndex: 0,
-    dataIndex: 0
-  });
-
-  chart.dispatchAction({
-    type: 'highlight',
-    seriesIndex: 0,
-    dataIndex: 0
-  });
-
-  chart.dispatchAction({
-    type: 'showTip',
-    seriesIndex: 0,
-    dataIndex: 0
-  });
-
-    """;
   }
 }

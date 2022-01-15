@@ -1,5 +1,8 @@
+import 'package:clipboard/clipboard.dart';
 import 'package:dio/dio.dart';
 import 'package:djubli/model/car_model.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CarProvider {
   static Future<List<CarModel>?> fetch() async {
@@ -10,7 +13,8 @@ class CarProvider {
     try {
       response = await dio.get(_api);
       final temp = response.data['data'] as List;
-      // print(response.data.toString());
+      // debugPrint("HGJK: " + .toString(), wrapWidth: 2048);
+      FlutterClipboard.copy("$response.data");
       return temp.map((e) => CarModel.fromJson(e)).toList();
     } catch (e) {
       print("Car Provider Error: $e");
