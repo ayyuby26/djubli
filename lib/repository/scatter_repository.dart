@@ -21,7 +21,7 @@ class Repository {
 
   highlightPoint(int index) {
     return """
-    var delayInMilliseconds = 2000; //1 second
+    var delayInMilliseconds = 1000; //1 second
     setTimeout(function() { 
           chart.dispatchAction({
             type: 'highlight',
@@ -101,8 +101,7 @@ class Repository {
             var value = param.value;
             // prettier-ignore
             return '<div style="border-bottom: 1px solid rgba(255,255,255,.3); font-size: 18px;padding-bottom: 7px;margin-bottom: 7px">'
-            + param.seriesName+', Laku Tahun: ' + value[0]
-            + '</div>'
+            + param.seriesName + '</div>'
             + schema[1].text + '：' + value[1] + '<br>'
             + schema[2].text + '：' + value[2] + '<br>'
             + schema[3].text + '：' + value[3] + '<br>'
@@ -142,7 +141,7 @@ class Repository {
             type: 'scatter',
             itemStyle: itemStyle,
             symbolSize: function (value) {
-                return value[1] / 8;
+                return value[1] / 13;
             }
         },
     ]

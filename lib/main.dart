@@ -12,6 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
+      themeMode: ThemeMode.light,
       debugShowCheckedModeBanner: false,
       title: "Djubli",
       home: HomePage(),
