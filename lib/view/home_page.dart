@@ -21,7 +21,9 @@ class _HomePageState extends State<HomePage> {
   var trigger = '';
   var extraScript = '';
   var option = '';
+  var currentIndex = 0;
   var highlightPoint = '';
+  var refresh = false;
   final repo = Repository();
   var controller = PageController(viewportFraction: .8);
 
@@ -40,11 +42,12 @@ class _HomePageState extends State<HomePage> {
   void listenCard() {
     controller.addListener(() {
       final i = controller.page;
-      if (i != null && (i % 1) == 0) {
+      if (i != null && (i % 1) == 0 && i != currentIndex) {
         final temp = extraScript;
         final index = i.round();
         final point = repo.highlightPoint(index);
         setState(() {
+          currentIndex = index;
           extraScript = temp + point;
         });
       }
@@ -61,8 +64,11 @@ class _HomePageState extends State<HomePage> {
         }
       }
     }
-    controller.animateToPage(index,
-        duration: const Duration(seconds: 1), curve: Curves.ease);
+    controller.animateToPage(
+      index,
+      duration: const Duration(seconds: 1),
+      curve: Curves.ease,
+    );
   }
 
   @override
@@ -118,9 +124,21 @@ class _HomePageState extends State<HomePage> {
                     SizedBox(
                       height: 200,
                       width: double.maxFinite,
-                      child: PageView(
-                        controller: controller,
-                        children: data!.map((e) => CardWidget(e)).toList(),
+                      child: GestureDetector(
+                        onTapUp: (details) {},
+                        onHorizontalDragEnd: (details) {
+                          print("object112 end $details");
+                        },
+                        onHorizontalDragDown: (details) {
+                          print("object112 $details");
+                        },
+                        onHorizontalDragCancel: () {
+                          print("object112 cancel");
+                        },
+                        child: PageView(
+                          controller: controller,
+                          children: data!.map((e) => CardWidget(e)).toList(),
+                        ),
                       ),
                     )
                 ],
