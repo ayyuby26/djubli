@@ -319,16 +319,6 @@ class _CarDetailPageState extends State<CarDetailPage> {
         ],
       );
 
-  final markers = [
-    LatLng(35.674, 51.41),
-    LatLng(35.676, 51.41),
-    LatLng(35.678, 51.41),
-    LatLng(35.68, 51.41),
-    LatLng(35.682, 51.41),
-    LatLng(35.684, 51.41),
-    LatLng(35.686, 51.41),
-  ];
-
   Widget _buildMarkerWidget(Offset pos, Color color) {
     return Positioned(
       left: pos.dx - 16,

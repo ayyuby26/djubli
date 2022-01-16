@@ -14,6 +14,7 @@ class Repository {
         e.modelName,
         e.exteriorColorId,
         e.km,
+        e.id,
       ]);
     }
     return dataBJ;
@@ -50,6 +51,7 @@ class Repository {
       {"name": "modelName", "index": 5, "text": 'Model'},
       {"name": "exteriorColorId", "index": 6, "text": 'ID warna'},
       {"name": "km", "index": 7, "text": 'KM'},
+      {"name": "id", "index": 7, "text": 'id'},
     ];
 
     const itemStyle = {
@@ -62,7 +64,7 @@ class Repository {
 
     const func = """
       chart.on('click', (params) => {
-          Messager.postMessage(params.value[1]);
+          Messager.postMessage(params.value[8]);
       });""";
 
     final dataBJ = nutrient(data);

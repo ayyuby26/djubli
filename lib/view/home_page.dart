@@ -5,6 +5,7 @@ import 'package:djubli/provider/car_provider.dart';
 import 'package:djubli/repository/scatter_repository.dart';
 import 'package:djubli/view/car_detail_page.dart';
 import 'package:djubli/widget/ripple_button_widget.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_echarts/flutter_echarts.dart';
 import 'package:intl/intl.dart';
@@ -22,7 +23,7 @@ class _HomePageState extends State<HomePage> {
   var option = '';
   var highlightPoint = '';
   final repo = Repository();
-  final controller = PageController(viewportFraction: .8);
+  var controller = PageController(viewportFraction: .8);
 
   List<CarModel>? data;
   void fetch() async {
@@ -48,6 +49,20 @@ class _HomePageState extends State<HomePage> {
         });
       }
     });
+  }
+
+  changeCardSlider(String message) {
+    var index = 0;
+    if (data != null) {
+      for (var i = 0; i < data!.length; i++) {
+        if (data![i].id == int.parse(message)) {
+          print("MASSS: $i");
+          index = i;
+        }
+      }
+    }
+    controller.animateToPage(index,
+        duration: const Duration(seconds: 1), curve: Curves.ease);
   }
 
   @override
@@ -86,6 +101,12 @@ class _HomePageState extends State<HomePage> {
                     child: extraScript.isEmpty
                         ? const Center(child: CircularProgressIndicator())
                         : Echarts(
+                            onMessage: (message) {
+                              changeCardSlider(message);
+                              if (kDebugMode) {
+                                print("KKL: " + message);
+                              }
+                            },
                             theme: 'wonderland',
                             key: UniqueKey(),
                             captureAllGestures: true,
